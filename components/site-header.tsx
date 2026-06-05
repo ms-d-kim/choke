@@ -6,8 +6,6 @@ const NAV = [
   { href: "#lens", label: "LENS" },
   { href: "#sim", label: "SIM" },
   { href: "#map", label: "MAP" },
-  { href: "#board", label: "BOARD" },
-  { href: "#port", label: "PORT" },
   { href: "#chat", label: "CHAT" },
 ];
 

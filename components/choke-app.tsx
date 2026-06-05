@@ -2,22 +2,23 @@
 
 import { useState } from "react";
 import {
-  bottlenecks,
-  defaultPortfolio,
   trends,
   workloads,
   type Direction,
   type Scenario,
   type WorkloadProfile,
 } from "@/data";
-import { scenarioFromTrend, scenarioFromWorkload } from "@/lib/scenario";
+import {
+  bottleneckById,
+  scenarioFromTrend,
+  scenarioFromWorkload,
+} from "@/lib/scenario";
 import { SiteHeader } from "@/components/site-header";
 import { WorkloadLens } from "@/components/workload-lens";
 import { ScenarioConsole } from "@/components/scenario-console";
 import { ValueChainGraph } from "@/components/value-chain-graph";
 import { ScenarioReadout } from "@/components/scenario-readout";
-import { BottleneckCard } from "@/components/bottleneck-card";
-import { PortfolioPanel } from "@/components/portfolio-panel";
+import { ChokepointDetailDialog } from "@/components/chokepoint-detail";
 import { AnalystChat } from "@/components/analyst-chat";
 import { Panel, PanelHeader } from "@/components/terminal";
 
@@ -27,6 +28,8 @@ export function ChokeApp() {
   const [error, setError] = useState<string | null>(null);
   // Progressive disclosure: nothing below the lens shows until a workload is picked.
   const [started, setStarted] = useState(false);
+  // Which chokepoint's evidence dialog is open (opened by clicking a graph node).
+  const [detailId, setDetailId] = useState<string | null>(null);
 
   function runWorkload(w: WorkloadProfile) {
     setError(null);
@@ -79,10 +82,8 @@ export function ChokeApp() {
     ? Object.fromEntries(scenario.impacts.map((i) => [i.bottleneckId, i.push]))
     : undefined;
 
-  function onGraphSelect() {
-    document
-      .getElementById("board")
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  function onGraphSelect(chokepointId: string) {
+    setDetailId(chokepointId);
   }
 
   return (
@@ -105,7 +106,7 @@ export function ChokeApp() {
               <Panel className="flex h-[480px] flex-col overflow-hidden">
                 <PanelHeader
                   title="Value-Chain Map"
-                  sub="bubble size = scenario impact · drag · hover to trace"
+                  sub="bubble size = impact · drag · click a node for evidence"
                 />
                 <div className="relative min-h-0 flex-1">
                   <ValueChainGraph
@@ -130,32 +131,20 @@ export function ChokeApp() {
               />
             </div>
 
-            {/* depth — evidence per chokepoint */}
-            <section id="board" className="scroll-mt-14">
-              <div className="mb-2 flex items-center justify-between">
-                <span className="term-label">Chokepoint board · the evidence</span>
-                <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
-                  {bottlenecks.length} tracked
-                  {scenario ? ` · ${scenario.label}` : ""}
-                </span>
-              </div>
-              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {bottlenecks.map((b) => (
-                  <BottleneckCard key={b.id} card={b} scenario={scenario} />
-                ))}
-              </div>
-            </section>
-
-            {/* payoff — what it means for a book */}
-            <div id="port" className="scroll-mt-14">
-              <PortfolioPanel portfolio={defaultPortfolio} scenario={scenario} />
-            </div>
-
             <div id="chat" className="scroll-mt-14">
               <AnalystChat />
             </div>
           </div>
         )}
+
+        <ChokepointDetailDialog
+          card={detailId ? (bottleneckById[detailId] ?? null) : null}
+          scenario={scenario}
+          open={detailId !== null}
+          onOpenChange={(o) => {
+            if (!o) setDetailId(null);
+          }}
+        />
 
         <SiteFooter />
       </main>

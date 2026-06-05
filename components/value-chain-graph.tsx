@@ -60,7 +60,7 @@ export function ValueChainGraph({
 }: {
   impacts?: Record<string, Direction>;
   loading?: boolean;
-  onSelect?: (id: string, type: string) => void;
+  onSelect?: (chokepointId: string) => void;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -258,7 +258,14 @@ export function ValueChainGraph({
               onPointerEnter={() => setHover(n.id)}
               onPointerLeave={() => setHover(null)}
               onClick={() => {
-                if (!movedRef.current) onSelect?.(n.id, n.type);
+                if (movedRef.current) return;
+                const cp =
+                  n.type === "chokepoint"
+                    ? n.id
+                    : n.type === "company"
+                      ? n.chokepoint
+                      : undefined;
+                if (cp) onSelect?.(cp);
               }}
             >
               <circle
@@ -331,9 +338,14 @@ export function ValueChainGraph({
               {hoverNode.blurb}
             </p>
           )}
+          {hoverNode.type === "chokepoint" && (
+            <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-amber">
+              tap for evidence &amp; sources →
+            </p>
+          )}
           {hoverNode.type === "company" && (
-            <p className="mt-0.5 text-[11px] text-muted-foreground">
-              Tap to jump to the board.
+            <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-amber">
+              tap → its chokepoint evidence
             </p>
           )}
         </div>
