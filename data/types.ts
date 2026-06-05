@@ -1,5 +1,5 @@
 // data/types.ts
-// Core domain types for Choke.
+// Core domain types for Bottlechip.
 //
 // Directional-by-design: nothing in here encodes a point-estimate return.
 // We model *status*, *severity*, and *direction* only — never "this stock goes

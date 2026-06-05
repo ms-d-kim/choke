@@ -1,5 +1,5 @@
-import { ChokeApp } from "@/components/choke-app";
+import { BottlechipApp } from "@/components/bottlechip-app";
 
 export default function Home() {
-  return <ChokeApp />;
+  return <BottlechipApp />;
 }

@@ -31,9 +31,9 @@ export function ScenarioReadout({
           </div>
         ) : !scenario ? (
           <p className="text-sm text-muted-foreground">
-            Pick a workload, fire an event, or type any{" "}
-            <span className="text-amber">what-if</span> in the console. The graph
-            and the book re-shade to the propagation.
+            Pick a workload or fire a{" "}
+            <span className="text-amber">scenario</span> — the graph re-shades to the
+            propagation.
           </p>
         ) : (
           <>

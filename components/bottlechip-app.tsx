@@ -22,7 +22,7 @@ import { ChokepointDetailDialog } from "@/components/chokepoint-detail";
 import { AnalystChat } from "@/components/analyst-chat";
 import { Panel, PanelHeader } from "@/components/terminal";
 
-export function ChokeApp() {
+export function BottlechipApp() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -159,11 +159,9 @@ function SiteFooter() {
         <span className="font-semibold text-amber">
           Directional, not predictive.
         </span>{" "}
-        Bottlechip shows the <em>direction</em>{" "}a scenario pushes each chokepoint
-        and
-        a book&apos;s exposure — colors and words, never point-estimate returns. Seed
-        evidence is curated from public Oct 2025–May 2026 reporting; every claim is
-        tagged by source type and links out.
+        Colors and words, never point-estimate returns. Evidence is curated from
+        public Oct 2025–May 2026 reporting; every claim is tagged by source and links
+        out.
       </p>
       <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.15em]">
         MS&amp;E 435 · seed data · directional by design

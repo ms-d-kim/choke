@@ -11,7 +11,7 @@ import type { Direction, Scenario, ScenarioImpact } from "@/data";
 const MODEL = process.env.OPENROUTER_MODEL ?? "anthropic/claude-sonnet-4.6";
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 
-const CHOKE_IDS = ["hbm", "cowos", "datacenter-power"] as const;
+const CHOKEPOINT_IDS = ["hbm", "cowos", "datacenter-power"] as const;
 const VALID: Direction[] = [
   "strong_positive",
   "positive",
@@ -93,7 +93,7 @@ export async function POST(request: Request) {
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${apiKey}`,
-        "HTTP-Referer": "https://choke-one.vercel.app",
+        "HTTP-Referer": "https://bottlechip.vercel.app",
         "X-Title": "Bottlechip",
       },
       body: JSON.stringify({
@@ -133,7 +133,7 @@ export async function POST(request: Request) {
     for (const it of Array.isArray(parsed.impacts) ? parsed.impacts : []) {
       const o = it as Record<string, unknown>;
       const id = String(o.bottleneckId);
-      if ((CHOKE_IDS as readonly string[]).includes(id)) {
+      if ((CHOKEPOINT_IDS as readonly string[]).includes(id)) {
         byId[id] = {
           bottleneckId: id,
           push: coercePush(o.push),
@@ -141,7 +141,7 @@ export async function POST(request: Request) {
         };
       }
     }
-    const impacts: ScenarioImpact[] = CHOKE_IDS.map(
+    const impacts: ScenarioImpact[] = CHOKEPOINT_IDS.map(
       (id) => byId[id] ?? { bottleneckId: id, push: "neutral", why: "Limited direct effect." },
     );
 

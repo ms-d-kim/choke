@@ -274,13 +274,26 @@ export function ValueChainGraph({
                 stroke={stroke}
                 strokeWidth={isChoke ? 2.5 : isHub ? 2 : 1.5}
               />
-              {(isHub || isChoke) && (
+              {isChoke && (
                 <text
                   textAnchor="middle"
                   dy="0.32em"
-                  fontSize={isHub ? 11 : 11}
+                  fontSize={11}
                   fontWeight={700}
-                  fill={isHub ? "#0a0a0a" : "#f3f1ec"}
+                  fill="#f3f1ec"
+                  className="font-mono"
+                  style={{ pointerEvents: "none" }}
+                >
+                  {n.label}
+                </text>
+              )}
+              {isHub && (
+                <text
+                  textAnchor="middle"
+                  y={r + 14}
+                  fontSize={11}
+                  fontWeight={700}
+                  fill="#22d3ee"
                   className="font-mono"
                   style={{ pointerEvents: "none" }}
                 >

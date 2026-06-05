@@ -93,7 +93,7 @@ export async function POST(request: Request) {
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${apiKey}`,
-        "HTTP-Referer": "https://choke-one.vercel.app",
+        "HTTP-Referer": "https://bottlechip.vercel.app",
         "X-Title": "Bottlechip",
       },
       body: JSON.stringify({
