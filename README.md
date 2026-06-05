@@ -80,7 +80,3 @@ Claims are paraphrased from public Oct 2025–May 2026 reporting of company disc
 every claim is tagged by source type and links out. Curated, not exhaustive — a
 reasoning layer on top of the supply chain, directional by design, not investment
 advice.
-
----
-
-MS&E 435 final project · built with Claude Code.
