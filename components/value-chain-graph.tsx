@@ -188,9 +188,19 @@ export function ValueChainGraph({
   function endDrag() {
     const id = dragRef.current;
     if (!id) return;
-    const n = nodeById[id];
-    n.fx = null;
-    n.fy = null;
+    const node = nodeById[id];
+    // a tap (pointer-down then up without dragging) opens the chokepoint's evidence
+    if (!movedRef.current) {
+      const cp =
+        node.type === "chokepoint"
+          ? node.id
+          : node.type === "company"
+            ? node.chokepoint
+            : undefined;
+      if (cp) onSelect?.(cp);
+    }
+    node.fx = null;
+    node.fy = null;
     dragRef.current = null;
     simRef.current?.alphaTarget(0);
   }
@@ -257,16 +267,6 @@ export function ValueChainGraph({
               onPointerDown={(e) => startDrag(e, n.id)}
               onPointerEnter={() => setHover(n.id)}
               onPointerLeave={() => setHover(null)}
-              onClick={() => {
-                if (movedRef.current) return;
-                const cp =
-                  n.type === "chokepoint"
-                    ? n.id
-                    : n.type === "company"
-                      ? n.chokepoint
-                      : undefined;
-                if (cp) onSelect?.(cp);
-              }}
             >
               <circle
                 r={r}
