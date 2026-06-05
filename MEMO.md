@@ -2,8 +2,8 @@
 
 **MS&E 435 · Option 2 (Build)**
 
-**Live demo:** https://bottlechip.vercel.app · **mirror (no login):** https://choke-one.vercel.app
-**Code:** https://github.com/ms-d-kim/choke · **Video:** `bottlechip-demo.mp4`
+**Live demo:** https://choke-one.vercel.app · **Video:** https://youtu.be/KaA5OqBeEB4
+**Code:** https://github.com/ms-d-kim/choke
 
 *Bottlechip is an investor terminal for the AI buildout's physical chokepoints — HBM
 memory, CoWoS packaging, and datacenter power. Pick the AI workload you care about, or
