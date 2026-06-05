@@ -145,7 +145,7 @@ export function ScenarioConsole({
                     {delta.label}
                   </div>
                   {impact?.why && (
-                    <p className="mt-1 text-[11px] leading-snug text-foreground/70">
+                    <p className="mt-1 text-xs leading-snug text-foreground/75">
                       {impact.why}
                     </p>
                   )}

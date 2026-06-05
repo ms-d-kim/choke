@@ -128,7 +128,7 @@ function EvidenceItem({ e }: { e: Evidence }) {
     <li className="rounded-md border border-border bg-secondary/30 px-3 py-2.5">
       <span
         className={cn(
-          "mb-1.5 inline-flex items-center rounded-xs border px-1.5 py-0.5 font-mono text-[9px] font-semibold tracking-wider",
+          "mb-1.5 inline-flex items-center rounded-xs border px-1.5 py-0.5 font-mono text-[10px] font-semibold tracking-wider",
           st.chip,
         )}
       >
@@ -144,7 +144,7 @@ function EvidenceItem({ e }: { e: Evidence }) {
         href={e.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-2 inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground transition-colors hover:text-foreground"
+        className="mt-2 inline-flex items-center gap-1 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
       >
         <span className="text-foreground/80">{e.org}</span>
         <span>·</span>

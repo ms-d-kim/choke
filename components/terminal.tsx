@@ -30,14 +30,14 @@ export function PanelHeader({
       <div className="flex items-baseline gap-2 truncate">
         <span
           className={cn(
-            "font-mono text-[11px] font-semibold uppercase tracking-[0.15em]",
+            "font-mono text-xs font-semibold uppercase tracking-[0.12em]",
             accent ? "text-amber" : "text-foreground",
           )}
         >
           {title}
         </span>
         {sub && (
-          <span className="truncate font-mono text-[10px] text-muted-foreground">
+          <span className="truncate font-mono text-[11px] text-muted-foreground">
             {sub}
           </span>
         )}
@@ -65,7 +65,7 @@ export function Chip({
       aria-pressed={active}
       onClick={onClick}
       className={cn(
-        "rounded-xs border px-2 py-1 font-mono text-[11px] transition-colors",
+        "rounded-xs border px-2.5 py-1 font-mono text-xs transition-colors",
         active
           ? "border-amber bg-amber text-primary-foreground"
           : "border-border bg-secondary/50 text-foreground/80 hover:border-amber/50 hover:text-foreground",

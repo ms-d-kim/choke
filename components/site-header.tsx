@@ -20,7 +20,7 @@ export function SiteHeader() {
             <span className="rounded bg-amber px-3 py-1.5 font-mono text-xl font-bold leading-none tracking-[0.08em] text-background shadow-[0_0_22px_rgba(34,211,238,0.6)]">
               <Scramble text="BOTTLECHIP" />
             </span>
-            <span className="hidden font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground sm:inline">
+            <span className="hidden font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground sm:inline">
               AI supply-chain terminal
             </span>
           </div>
@@ -30,7 +30,7 @@ export function SiteHeader() {
               <a
                 key={n.href}
                 href={n.href}
-                className="rounded-xs px-2 py-1 font-mono text-[11px] tracking-wider text-muted-foreground transition-colors hover:bg-secondary hover:text-amber"
+                className="rounded-xs px-2.5 py-1 font-mono text-xs tracking-wide text-muted-foreground transition-colors hover:bg-secondary hover:text-amber"
               >
                 {n.label}
               </a>
@@ -39,7 +39,7 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-3">
             <Legend />
-            <span className="flex items-center gap-1.5 rounded-xs border border-loose/40 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-loose">
+            <span className="flex items-center gap-1.5 rounded-xs border border-loose/40 px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider text-loose">
               <span className="size-1.5 animate-pulse rounded-full bg-loose" />
               live
             </span>
@@ -100,7 +100,7 @@ function Legend() {
       {order.map((s) => (
         <span
           key={s}
-          className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+          className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground"
         >
           <span className={cn("size-1.5 rounded-full", statusMeta[s].dot)} />
           {statusMeta[s].label}

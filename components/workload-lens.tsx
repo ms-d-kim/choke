@@ -56,7 +56,7 @@ export function WorkloadLens({
                     </span>
                   )}
                 </div>
-                <span className="text-[11px] leading-snug text-muted-foreground">
+                <span className="text-xs leading-snug text-muted-foreground">
                   {w.tagline}
                 </span>
                 <div className="mt-1 flex items-center gap-3 border-t border-border pt-1.5">
@@ -67,7 +67,7 @@ export function WorkloadLens({
                       <span
                         key={id}
                         className={cn(
-                          "flex items-center gap-1 font-mono text-[10px]",
+                          "flex items-center gap-1 font-mono text-[11px]",
                           d.text,
                         )}
                       >

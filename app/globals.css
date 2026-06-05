@@ -66,7 +66,7 @@
   --secondary: #17171a;
   --secondary-foreground: #e8e6e1;
   --muted: #141417;
-  --muted-foreground: #8b8b93;
+  --muted-foreground: #a2a3ad;
   --accent: #1b1b1f;
   --accent-foreground: #a5f3fc;
   --destructive: #ff4338;
@@ -115,7 +115,7 @@
 
 /* terminal helpers */
 .term-label {
-  @apply font-mono text-[10px] font-medium uppercase tracking-[0.15em] text-muted-foreground;
+  @apply font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground;
 }
 .term-panel {
   @apply border border-border bg-card;
