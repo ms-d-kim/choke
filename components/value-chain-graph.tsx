@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Loader2 } from "lucide-react";
 import {
   forceCenter,
   forceCollide,
@@ -47,9 +48,11 @@ const ROLE_COLOR: Record<string, string> = {
 
 export function ValueChainGraph({
   impacts,
+  loading,
   onSelect,
 }: {
   impacts?: Record<string, Direction>;
+  loading?: boolean;
   onSelect?: (id: string, type: string) => void;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -305,6 +308,15 @@ export function ValueChainGraph({
               Tap to jump to the board.
             </p>
           )}
+        </div>
+      )}
+
+      {loading && (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background/55 backdrop-blur-[1px]">
+          <div className="flex items-center gap-2 border border-amber/30 bg-card px-3 py-1.5 font-mono text-xs text-amber">
+            <Loader2 className="size-3.5 animate-spin" />
+            simulating…
+          </div>
         </div>
       )}
     </div>

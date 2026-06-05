@@ -103,7 +103,11 @@ export function ChokeApp() {
               sub="drag · hover to trace · re-shades to scenario"
             />
             <div className="min-h-[420px] flex-1 p-1">
-              <ValueChainGraph impacts={impacts} onSelect={onGraphSelect} />
+              <ValueChainGraph
+                impacts={impacts}
+                loading={loading}
+                onSelect={onGraphSelect}
+              />
             </div>
           </Panel>
           <ScenarioReadout scenario={scenario} loading={loading} />
