@@ -9,11 +9,11 @@ import { DIRECTION_SCORE, motionOf } from "@/lib/scenario";
 
 // Honest source-kind tags — what *type* of source each claim rests on.
 export const sourceTypeMeta: Record<SourceType, { label: string; chip: string }> = {
-  Earnings: { label: "EARNINGS", chip: "bg-amber/10 text-amber border-amber/30" },
+  Earnings: { label: "EARNINGS", chip: "bg-easing/10 text-easing border-easing/30" },
   News: { label: "NEWS", chip: "bg-cyan/10 text-cyan border-cyan/30" },
   Research: { label: "RESEARCH", chip: "bg-loose/10 text-loose border-loose/30" },
   "Gov / Lab data": { label: "GOV / LAB", chip: "bg-loose/10 text-loose border-loose/30" },
-  Filing: { label: "FILING", chip: "bg-amber/15 text-amber border-amber/40" },
+  Filing: { label: "FILING", chip: "bg-easing/15 text-easing border-easing/40" },
   "Press release": { label: "PRESS", chip: "bg-secondary text-muted-foreground border-border" },
 };
 

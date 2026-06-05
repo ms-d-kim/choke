@@ -39,18 +39,18 @@ function radiusFor(n: GraphNode, impacts?: Record<string, Direction>) {
 }
 
 function chokepointTone(push?: Direction) {
-  if (!push) return { ring: "#ff9e1b", fill: "#1c1606" };
+  if (!push) return { ring: "#22d3ee", fill: "#06181c" };
   const s = DIRECTION_SCORE[push];
   if (s > 0) return { ring: "#ff4338", fill: "#220b09" }; // tighten → red
   if (s < 0) return { ring: "#25d366", fill: "#08170e" }; // ease → green
-  return { ring: "#ff9e1b", fill: "#1c1606" };
+  return { ring: "#22d3ee", fill: "#06181c" };
 }
 
 const ROLE_COLOR: Record<string, string> = {
   long: "#25d366",
   watch: "#ffcf4a",
   pressured: "#ff4338",
-  core: "#ff9e1b",
+  core: "#22d3ee",
 };
 
 export function ValueChainGraph({
@@ -221,7 +221,7 @@ export function ValueChainGraph({
               y1={s.y}
               x2={t.x}
               y2={t.y}
-              stroke={active ? "#ff9e1b" : "#2c2c32"}
+              stroke={active ? "#22d3ee" : "#2c2c32"}
               strokeWidth={active ? 1.6 : 1}
               opacity={hover && !active ? 0.18 : 0.65}
             />
@@ -236,9 +236,9 @@ export function ValueChainGraph({
           const isChoke = n.type === "chokepoint";
           const isHub = n.type === "hub";
           const tone = isChoke ? chokepointTone(impacts?.[n.id]) : null;
-          const fill = isHub ? "#ff9e1b" : isChoke ? tone!.fill : "#101013";
+          const fill = isHub ? "#22d3ee" : isChoke ? tone!.fill : "#101013";
           const stroke = isHub
-            ? "#ffd9a0"
+            ? "#a5f3fc"
             : isChoke
               ? tone!.ring
               : ROLE_COLOR[n.role ?? "core"] ?? "#5a5a62";

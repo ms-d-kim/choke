@@ -16,7 +16,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CHOKE — AI supply-chain bottleneck terminal",
+  title: "Bottlechip — AI supply-chain bottleneck terminal",
   description:
     "An investor terminal for the AI buildout's physical chokepoints — memory, packaging, power. Map the value chain, simulate any scenario, and watch a book re-shade directionally.",
 };

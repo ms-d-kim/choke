@@ -35,13 +35,13 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
 
-  /* Choke / Bloomberg-terminal palette */
+  /* Bottlechip — cyan-on-black terminal palette */
   --color-tight: #ff4338; /* red — constraint binds harder */
   --color-easing: #ffcf4a; /* yellow — easing */
   --color-loose: #25d366; /* green — loose / positive */
-  --color-amber: #ff9e1b; /* terminal chrome / brand accent */
-  --color-amber-dim: #b8730f;
-  --color-cyan: #38bdf8;
+  --color-amber: #22d3ee; /* brand accent (cyan; token name kept for reach) */
+  --color-amber-dim: #0e7490;
+  --color-cyan: #60a5fa; /* source-tag "news" (blue, distinct from brand) */
   --color-grid: #1a1a1a;
   --color-panel: #0c0c0e;
 
@@ -61,26 +61,26 @@
   --card-foreground: #e8e6e1;
   --popover: #101013;
   --popover-foreground: #e8e6e1;
-  --primary: #ff9e1b;
+  --primary: #22d3ee;
   --primary-foreground: #0a0a0a;
   --secondary: #17171a;
   --secondary-foreground: #e8e6e1;
   --muted: #141417;
   --muted-foreground: #8b8b93;
   --accent: #1b1b1f;
-  --accent-foreground: #ffcf8a;
+  --accent-foreground: #a5f3fc;
   --destructive: #ff4338;
   --border: #232327;
   --input: #2a2a2f;
-  --ring: #ff9e1b;
+  --ring: #22d3ee;
   --sidebar: #0c0c0e;
   --sidebar-foreground: #e8e6e1;
-  --sidebar-primary: #ff9e1b;
+  --sidebar-primary: #22d3ee;
   --sidebar-primary-foreground: #0a0a0a;
   --sidebar-accent: #17171a;
   --sidebar-accent-foreground: #e8e6e1;
   --sidebar-border: #232327;
-  --sidebar-ring: #ff9e1b;
+  --sidebar-ring: #22d3ee;
   --radius: 3px;
 }
 
@@ -108,7 +108,7 @@
     background: transparent;
   }
   ::selection {
-    background: #ff9e1b;
+    background: #22d3ee;
     color: #0a0a0a;
   }
 }

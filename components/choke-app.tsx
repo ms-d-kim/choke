@@ -159,7 +159,8 @@ function SiteFooter() {
         <span className="font-semibold text-amber">
           Directional, not predictive.
         </span>{" "}
-        CHOKE shows the <em>direction</em>{" "}a scenario pushes each chokepoint and
+        Bottlechip shows the <em>direction</em>{" "}a scenario pushes each chokepoint
+        and
         a book&apos;s exposure — colors and words, never point-estimate returns. Seed
         evidence is curated from public Oct 2025–May 2026 reporting; every claim is
         tagged by source type and links out.

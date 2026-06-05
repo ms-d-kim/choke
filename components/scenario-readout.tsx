@@ -3,6 +3,7 @@
 import { ArrowDownRight, ArrowUpRight, Loader2, TriangleAlert } from "lucide-react";
 import type { Scenario, ScenarioActor } from "@/data";
 import { Panel, PanelHeader } from "@/components/terminal";
+import { Scramble, Typewriter } from "@/components/anim";
 
 export function ScenarioReadout({
   scenario,
@@ -37,10 +38,12 @@ export function ScenarioReadout({
         ) : (
           <>
             <div>
-              <div className="term-label mb-1">{scenario.label}</div>
+              <div className="term-label mb-1">
+                <Scramble text={scenario.label} />
+              </div>
               {scenario.narrative && (
                 <p className="text-sm leading-relaxed text-foreground/85">
-                  {scenario.narrative}
+                  <Typewriter text={scenario.narrative} />
                 </p>
               )}
             </div>

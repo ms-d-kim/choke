@@ -51,7 +51,7 @@ const GROUNDING = JSON.stringify(
   0,
 );
 
-const SYSTEM_PROMPT = `You are the analyst assistant for Choke, an AI supply-chain bottleneck → beneficiary tracker built for investors.
+const SYSTEM_PROMPT = `You are the analyst assistant for Bottlechip, an AI supply-chain bottleneck → beneficiary tracker built for investors.
 
 Hard rules:
 - Answer ONLY from the DATA provided below. If the data doesn't cover it, say so plainly — do not invent companies, numbers, or sources.
@@ -94,7 +94,7 @@ export async function POST(request: Request) {
         "content-type": "application/json",
         authorization: `Bearer ${apiKey}`,
         "HTTP-Referer": "https://choke-one.vercel.app",
-        "X-Title": "Choke",
+        "X-Title": "Bottlechip",
       },
       body: JSON.stringify({
         model: MODEL,

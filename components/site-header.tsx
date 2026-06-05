@@ -1,5 +1,6 @@
 import { statusMeta } from "@/lib/visuals";
 import { cn } from "@/lib/utils";
+import { Scramble } from "@/components/anim";
 import { bottlenecks, eventPresets, trends, type Status } from "@/data";
 
 const NAV = [
@@ -16,8 +17,8 @@ export function SiteHeader() {
       <div className="sticky top-0 z-30 border-b border-amber/25 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70">
         <div className="mx-auto flex h-12 w-full max-w-[1440px] items-center justify-between gap-3 px-3 sm:px-4">
           <div className="flex items-center gap-3">
-            <span className="rounded-xs bg-amber px-2.5 py-1 font-mono text-lg font-bold leading-none tracking-[0.12em] text-background shadow-[0_0_14px_rgba(255,158,27,0.4)]">
-              CHOKE
+            <span className="rounded-xs bg-amber px-2.5 py-1 font-mono text-lg font-bold leading-none tracking-[0.1em] text-background shadow-[0_0_16px_rgba(34,211,238,0.5)]">
+              <Scramble text="BOTTLECHIP" />
             </span>
             <span className="hidden font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground sm:inline">
               AI supply-chain terminal
@@ -50,9 +51,10 @@ export function SiteHeader() {
       <div className="border-b border-border bg-card/40">
         <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-3 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4">
           <p className="max-w-2xl text-sm leading-relaxed">
-            <span className="font-semibold text-amber">
-              Value accrues to whoever owns the bottleneck.
-            </span>{" "}
+            <Scramble
+              className="font-semibold text-amber"
+              text="Value accrues to whoever owns the bottleneck."
+            />{" "}
             <span className="text-muted-foreground">
               Map the AI buildout&apos;s physical chokepoints — memory, packaging,
               power — simulate any scenario, and watch a book re-shade.

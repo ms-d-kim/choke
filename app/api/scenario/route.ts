@@ -36,7 +36,7 @@ const GROUNDING = JSON.stringify({
     .map((n) => ({ name: n.name, ticker: n.label, chokepoint: n.chokepoint })),
 });
 
-const SYSTEM = `You are CHOKE's scenario simulator for investors. Given a hypothetical event, trace how it propagates through three physical AI-buildout chokepoints — HBM (memory), CoWoS (packaging), datacenter power — and who benefits or is pressured.
+const SYSTEM = `You are Bottlechip's scenario simulator for investors. Given a hypothetical event, trace how it propagates through three physical AI-buildout chokepoints — HBM (memory), CoWoS (packaging), datacenter power — and who benefits or is pressured.
 
 Rules:
 - DIRECTIONAL ONLY. Never give returns, price targets, percentages, or fabricated figures. Use tighten/ease language and the named companies from the DATA.
@@ -94,7 +94,7 @@ export async function POST(request: Request) {
         "content-type": "application/json",
         authorization: `Bearer ${apiKey}`,
         "HTTP-Referer": "https://choke-one.vercel.app",
-        "X-Title": "Choke",
+        "X-Title": "Bottlechip",
       },
       body: JSON.stringify({
         model: MODEL,
