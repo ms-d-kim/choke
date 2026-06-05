@@ -130,7 +130,7 @@ export async function POST(request: Request) {
 
     // Normalize impacts → exactly one per chokepoint.
     const byId: Record<string, ScenarioImpact> = {};
-    for (const it of (parsed.impacts as unknown[]) ?? []) {
+    for (const it of Array.isArray(parsed.impacts) ? parsed.impacts : []) {
       const o = it as Record<string, unknown>;
       const id = String(o.bottleneckId);
       if ((CHOKE_IDS as readonly string[]).includes(id)) {

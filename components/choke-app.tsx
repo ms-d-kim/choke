@@ -66,12 +66,10 @@ export function ChokeApp() {
     ? Object.fromEntries(scenario.impacts.map((i) => [i.bottleneckId, i.push]))
     : undefined;
 
-  function onGraphSelect(_id: string, type: string) {
-    if (type === "chokepoint") {
-      document
-        .getElementById("board")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+  function onGraphSelect() {
+    document
+      .getElementById("board")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   return (

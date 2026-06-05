@@ -59,6 +59,7 @@ export function ValueChainGraph({
   const [, setVersion] = useState(0);
   const [hover, setHover] = useState<string | null>(null);
   const dragRef = useRef<string | null>(null);
+  const movedRef = useRef(false);
 
   const { nodes, links, nodeById, adjacency } = useMemo(() => {
     const nodes: SimNode[] = graphNodes.map((n, i) => ({
@@ -136,6 +137,7 @@ export function ValueChainGraph({
   function startDrag(e: React.PointerEvent, id: string) {
     e.preventDefault();
     dragRef.current = id;
+    movedRef.current = false;
     const p = toSvg(e);
     const n = nodeById[id];
     n.fx = p.x;
@@ -146,6 +148,7 @@ export function ValueChainGraph({
   function handleMove(e: React.PointerEvent) {
     const id = dragRef.current;
     if (!id) return;
+    movedRef.current = true;
     const p = toSvg(e);
     const n = nodeById[id];
     n.fx = p.x;
@@ -223,7 +226,9 @@ export function ValueChainGraph({
               onPointerDown={(e) => startDrag(e, n.id)}
               onPointerEnter={() => setHover(n.id)}
               onPointerLeave={() => setHover(null)}
-              onClick={() => onSelect?.(n.id, n.type)}
+              onClick={() => {
+                if (!movedRef.current) onSelect?.(n.id, n.type);
+              }}
             >
               <circle
                 r={r}
@@ -297,7 +302,7 @@ export function ValueChainGraph({
           )}
           {hoverNode.type === "company" && (
             <p className="mt-0.5 text-[11px] text-muted-foreground">
-              Tap to trace its chokepoint.
+              Tap to jump to the board.
             </p>
           )}
         </div>

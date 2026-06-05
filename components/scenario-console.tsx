@@ -100,7 +100,7 @@ export function ScenarioConsole({
             {eventPresets.map((e) => (
               <Chip
                 key={e.id}
-                active={scenario?.label === e.label}
+                active={scenario?.description === e.prompt}
                 onClick={() => onSimulate(e.prompt, e.label)}
                 title={e.prompt}
               >
