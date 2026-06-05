@@ -86,6 +86,16 @@ export type WorkloadTrend = {
   impacts: TrendImpact[];
 };
 
+// Application-level AI workloads — the user's first-engagement lens.
+// "If you're building / investing in X, here's the chokepoint signature."
+export type WorkloadProfile = {
+  id: string;
+  name: string;
+  tagline: string; // short descriptor for the tile
+  description: string; // narrative shown in the readout
+  impacts: TrendImpact[];
+};
+
 export type PortfolioPosition = {
   ticker: string;
   name: string;

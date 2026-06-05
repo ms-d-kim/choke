@@ -5,11 +5,14 @@ import {
   bottlenecks,
   defaultPortfolio,
   trends,
+  workloads,
   type Direction,
   type Scenario,
+  type WorkloadProfile,
 } from "@/data";
-import { scenarioFromTrend } from "@/lib/scenario";
+import { scenarioFromTrend, scenarioFromWorkload } from "@/lib/scenario";
 import { SiteHeader } from "@/components/site-header";
+import { WorkloadLens } from "@/components/workload-lens";
 import { ScenarioConsole } from "@/components/scenario-console";
 import { ValueChainGraph } from "@/components/value-chain-graph";
 import { ScenarioReadout } from "@/components/scenario-readout";
@@ -22,6 +25,11 @@ export function ChokeApp() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  function runWorkload(w: WorkloadProfile) {
+    setError(null);
+    setScenario(scenarioFromWorkload(w));
+  }
 
   function runTrend(trendId: string) {
     const t = trends.find((x) => x.id === trendId);
@@ -71,6 +79,14 @@ export function ChokeApp() {
       <SiteHeader />
 
       <main className="mx-auto w-full max-w-[1440px] flex-1 space-y-3 px-3 pt-3 pb-16 sm:px-4">
+        <div id="lens" className="scroll-mt-14">
+          <WorkloadLens
+            workloads={workloads}
+            selectedId={scenario?.id ?? null}
+            onSelect={runWorkload}
+          />
+        </div>
+
         <div id="sim" className="scroll-mt-14">
           <ScenarioConsole
             scenario={scenario}
@@ -131,8 +147,8 @@ function SiteFooter() {
         <span className="font-semibold text-amber">
           Directional, not predictive.
         </span>{" "}
-        CHOKE shows the <em>direction</em> a scenario pushes each chokepoint and a
-        book&apos;s exposure — colors and words, never point-estimate returns. Seed
+        CHOKE shows the <em>direction</em>{" "}a scenario pushes each chokepoint and
+        a book&apos;s exposure — colors and words, never point-estimate returns. Seed
         evidence is curated from public Oct 2025–May 2026 reporting; every claim is
         tagged by source type and links out.
       </p>

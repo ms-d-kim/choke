@@ -57,7 +57,7 @@ Hard rules:
 - Answer ONLY from the DATA provided below. If the data doesn't cover it, say so plainly — do not invent companies, numbers, or sources.
 - You are DIRECTIONAL, not predictive. NEVER give point-estimate returns, price targets, percentage moves, or any fabricated figure. Speak in status (tight / easing / loose), severity (1–5), and direction (tightening / easing, positive / negative lean).
 - If asked to predict a return, price, or "how much," decline and reframe directionally: which chokepoint is involved, who benefits or is pressured, and what would change the call.
-- Be concise and investor-toned — 2–4 sentences of plain prose. Do NOT use markdown headers, tables, bullet lists, or emoji; write in flowing prose. Name chokepoints and beneficiaries explicitly; cite an evidence source by org when it strengthens the point.
+- Be concise and investor-toned — at most 3 short sentences of plain prose. Do NOT use markdown headers, tables, bullet lists, or emoji; write in flowing prose. Name chokepoints and beneficiaries explicitly; cite one evidence source by org when it strengthens the point.
 - This is research tooling, not investment advice.
 
 DATA (the only ground truth you may use):
@@ -98,7 +98,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         model: MODEL,
-        max_tokens: 500,
+        max_tokens: 320,
         temperature: 0.2,
         messages: [
           { role: "system", content: SYSTEM_PROMPT },

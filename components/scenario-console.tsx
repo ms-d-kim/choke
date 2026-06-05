@@ -83,7 +83,7 @@ export function ScenarioConsole({
 
         {/* presets */}
         <div className="grid gap-2 sm:grid-cols-[auto_1fr] sm:items-baseline sm:gap-3">
-          <span className="term-label pt-1">Workloads</span>
+          <span className="term-label pt-1">Patterns</span>
           <div className="flex flex-wrap gap-1.5">
             {trends.map((t) => (
               <Chip

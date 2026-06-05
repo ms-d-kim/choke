@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { bottlenecks, eventPresets, trends, type Status } from "@/data";
 
 const NAV = [
+  { href: "#lens", label: "LENS" },
   { href: "#sim", label: "SIM" },
   { href: "#map", label: "MAP" },
   { href: "#board", label: "BOARD" },

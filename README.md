@@ -14,6 +14,10 @@ beneficiary map, and a sample book **directionally**.
 
 ## What's inside
 
+- **Workload Lens (start here)** — pick the AI workload you're building or investing in
+  (coding agents, voice agents, video generation, autonomous driving, world models,
+  recommenders) and the whole terminal re-shades to that workload's chokepoint
+  signature.
 - **Value-chain graph** — an Obsidian-style force network (chokepoints + key names)
   that you can drag and hover to trace relationships. Chokepoint nodes re-shade red
   (tightening) / green (easing) under a scenario.

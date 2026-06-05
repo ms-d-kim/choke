@@ -133,9 +133,9 @@ export const bottlenecks: BottleneckCard[] = [
           'NVIDIA is the CoWoS "anchor tenant," reportedly securing the majority (>60%) of 2025–2026 capacity.',
         sourceType: "News",
         source: "The Great Packaging Pivot",
-        org: "FinancialContent",
+        org: "Wedbush",
         date: "2026-01",
-        url: "https://markets.financialcontent.com/stocks/article/tokenring-2026-1-1-the-great-packaging-pivot",
+        url: "https://investor.wedbush.com/wedbush/article/tokenring-2026-1-1-the-great-packaging-pivot-how-tsmc-is-doubling-cowos-capacity-to-break-the-ai-supply-bottleneck-through-2026",
       },
       {
         claim:

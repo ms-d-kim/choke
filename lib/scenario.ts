@@ -16,6 +16,7 @@ import {
   type Scenario,
   type ScenarioActor,
   type ScenarioImpact,
+  type WorkloadProfile,
   type WorkloadTrend,
 } from "@/data";
 
@@ -87,6 +88,25 @@ export function scenarioFromTrend(trend: WorkloadTrend): Scenario {
     note: trend.note,
     impacts,
     narrative: trend.description,
+    beneficiaries: deriveActors(impacts, "long"),
+    pressured: deriveActors(impacts, "pressured"),
+    origin: "preset",
+  };
+}
+
+export function scenarioFromWorkload(w: WorkloadProfile): Scenario {
+  const impacts: ScenarioImpact[] = w.impacts.map((i) => ({
+    bottleneckId: i.bottleneckId,
+    push: i.tightnessPush,
+    why: i.why,
+  }));
+  return {
+    id: w.id,
+    label: w.name,
+    kind: "workload",
+    description: w.description,
+    impacts,
+    narrative: w.description,
     beneficiaries: deriveActors(impacts, "long"),
     pressured: deriveActors(impacts, "pressured"),
     origin: "preset",
