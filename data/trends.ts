@@ -1,7 +1,11 @@
 // data/trends.ts
 //
-// Workload trends. Each trend pushes every bottleneck's *tightness* by a
-// direction (how much more/less binding the constraint gets). Directional only.
+// Technical workload "patterns". Each has a DISTINCT chokepoint signature so the
+// graph re-sizes meaningfully between them:
+//   test-time  → power-dominant   (Power big · HBM med · CoWoS small)
+//   long-ctx   → memory-dominant  (HBM big · CoWoS med · Power small)
+//   agentic    → throughput+chips (Power big · CoWoS big · HBM med)
+// Directional only.
 
 import type { WorkloadTrend } from "./types";
 
@@ -11,22 +15,22 @@ export const trends: WorkloadTrend[] = [
     name: "Test-time compute",
     shortName: "Test-time compute",
     description:
-      "Models spend far more compute at inference time (long reasoning chains), raising per-query memory bandwidth and sustained power draw.",
+      "Models spend far more compute at inference (long reasoning chains), raising sustained power draw and per-query bandwidth.",
     impacts: [
-      {
-        bottleneckId: "hbm",
-        tightnessPush: "positive",
-        why: "More bandwidth consumed per query as reasoning chains grow.",
-      },
-      {
-        bottleneckId: "cowos",
-        tightnessPush: "positive",
-        why: "More accelerators needed to serve the reasoning load.",
-      },
       {
         bottleneckId: "datacenter-power",
         tightnessPush: "strong_positive",
-        why: "Sustained high-utilization inference raises continuous power draw.",
+        why: "Sustained high-utilization inference is the dominant new draw.",
+      },
+      {
+        bottleneckId: "hbm",
+        tightnessPush: "positive",
+        why: "Long reasoning chains lift memory bandwidth per query.",
+      },
+      {
+        bottleneckId: "cowos",
+        tightnessPush: "neutral",
+        why: "Uses existing accelerators harder rather than adding packaging demand.",
       },
     ],
   },
@@ -35,12 +39,12 @@ export const trends: WorkloadTrend[] = [
     name: "Long context / KV cache growth",
     shortName: "Long context",
     description:
-      "Larger context windows blow up the KV cache, which is HBM-resident — capacity and bandwidth both scale with context length × batch.",
+      "Larger context windows blow up the KV cache, which is HBM-resident — capacity and bandwidth scale with context length × batch.",
     impacts: [
       {
         bottleneckId: "hbm",
         tightnessPush: "strong_positive",
-        why: "KV cache lives in HBM; capacity and bandwidth scale with context.",
+        why: "The KV cache lives in HBM — the binding constraint by far.",
       },
       {
         bottleneckId: "cowos",
@@ -49,8 +53,8 @@ export const trends: WorkloadTrend[] = [
       },
       {
         bottleneckId: "datacenter-power",
-        tightnessPush: "positive",
-        why: "Bigger working sets lift power per token served.",
+        tightnessPush: "neutral",
+        why: "Memory-bound; not primarily a power story.",
       },
     ],
   },
@@ -59,24 +63,24 @@ export const trends: WorkloadTrend[] = [
     name: "Agentic workflows",
     shortName: "Agentic",
     description:
-      "Multi-step, multi-call agents multiply tokens and inference passes per user task, amplifying throughput demand across the stack.",
+      "Multi-step, multi-call agents multiply inference passes and concurrency per task, amplifying throughput and accelerator demand.",
     note:
       "Also lifts managed-inference providers (e.g. Baseten) as a beneficiary class.",
     impacts: [
       {
         bottleneckId: "datacenter-power",
         tightnessPush: "strong_positive",
-        why: "Throughput multiplies sustained power demand.",
+        why: "Throughput from many calls multiplies sustained power demand.",
+      },
+      {
+        bottleneckId: "cowos",
+        tightnessPush: "strong_positive",
+        why: "Concurrent agents need many more accelerators — heavy packaging pull.",
       },
       {
         bottleneckId: "hbm",
         tightnessPush: "positive",
         why: "More inference passes consume more bandwidth.",
-      },
-      {
-        bottleneckId: "cowos",
-        tightnessPush: "positive",
-        why: "More accelerators to serve concurrent agent calls.",
       },
     ],
   },

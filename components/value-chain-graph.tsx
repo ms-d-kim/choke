@@ -30,12 +30,12 @@ function radiusFor(n: GraphNode, impacts?: Record<string, Direction>) {
   if (n.type === "chokepoint") {
     // size by how hard the scenario pushes this chokepoint's tightness
     const s = impacts?.[n.id] ? DIRECTION_SCORE[impacts[n.id]] : 0;
-    return 20 + s * 4.5; // ~11 (strongly easing) … 29 (strongly tightening)
+    return 18 + s * 6; // 6 (strongly easing) … 30 (strongly tightening); 18 neutral
   }
   // company: size by how impacted its chokepoint is under the scenario
   const cp = n.chokepoint;
   const s = cp && impacts?.[cp] ? DIRECTION_SCORE[impacts[cp]] : 0;
-  return Math.max(5, 8 + s * 2.5); // ~5 … 13
+  return Math.max(5, 7 + s * 3); // 5 … 13; 7 neutral
 }
 
 function chokepointTone(push?: Direction) {
