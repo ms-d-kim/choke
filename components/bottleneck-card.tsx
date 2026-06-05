@@ -19,10 +19,11 @@ import { Separator } from "@/components/ui/separator";
 import { StatusPill } from "@/components/status-pill";
 import { SeverityPips } from "@/components/severity-pips";
 import { cn } from "@/lib/utils";
-import { impactFor } from "@/lib/scenario";
+import { pushFor } from "@/lib/scenario";
 import {
   categoryLabel,
   deltaMeta,
+  sourceTypeMeta,
   stackLayerLabel,
   statusMeta,
 } from "@/lib/visuals";
@@ -31,18 +32,18 @@ import type {
   Evidence,
   ForwardCatalyst,
   Position,
-  WorkloadTrend,
+  Scenario,
 } from "@/data";
 
 export function BottleneckCard({
   card,
-  trend,
+  scenario,
 }: {
   card: TCard;
-  trend?: WorkloadTrend;
+  scenario?: Scenario | null;
 }) {
-  const impact = trend ? impactFor(trend, card.id) : undefined;
-  const delta = impact ? deltaMeta(impact.tightnessPush) : undefined;
+  const impact = scenario ? pushFor(scenario, card.id) : undefined;
+  const delta = impact ? deltaMeta(impact.push) : undefined;
   const statusTone = statusMeta[card.status];
 
   // Top beneficiaries shown on the card face.
@@ -89,8 +90,8 @@ export function BottleneckCard({
           {card.summary}
         </p>
 
-        {/* Scenario delta — appears only when a trend is selected */}
-        {delta && impact && trend && (
+        {/* Scenario delta — appears when a scenario is live */}
+        {delta && impact && scenario && (
           <div
             className={cn(
               "rounded-md border px-3 py-2 text-xs leading-relaxed",
@@ -103,7 +104,7 @@ export function BottleneckCard({
               </span>
               <span>{delta.label}</span>
               <span className="font-normal opacity-70">
-                under {trend.shortName.toLowerCase()}
+                under {scenario.label.toLowerCase()}
               </span>
             </div>
             <p className="mt-1 text-foreground/70">{impact.why}</p>
@@ -140,16 +141,22 @@ export function BottleneckCard({
               <ArrowUpRight className="size-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
           </DialogTrigger>
-          <CardDetails card={card} trend={trend} />
+          <CardDetails card={card} scenario={scenario} />
         </Dialog>
       </CardFooter>
     </Card>
   );
 }
 
-function CardDetails({ card, trend }: { card: TCard; trend?: WorkloadTrend }) {
-  const impact = trend ? impactFor(trend, card.id) : undefined;
-  const delta = impact ? deltaMeta(impact.tightnessPush) : undefined;
+function CardDetails({
+  card,
+  scenario,
+}: {
+  card: TCard;
+  scenario?: Scenario | null;
+}) {
+  const impact = scenario ? pushFor(scenario, card.id) : undefined;
+  const delta = impact ? deltaMeta(impact.push) : undefined;
   return (
     <DialogContent className="max-h-[88vh] gap-0 overflow-y-auto sm:max-w-2xl">
       <DialogHeader className="gap-2 text-left">
@@ -165,11 +172,11 @@ function CardDetails({ card, trend }: { card: TCard; trend?: WorkloadTrend }) {
         </DialogDescription>
       </DialogHeader>
 
-      {delta && impact && trend && (
+      {delta && impact && scenario && (
         <div className={cn("mt-4 rounded-md border px-3 py-2 text-xs", delta.chip)}>
           <span className="font-mono">{delta.arrows}</span>{" "}
           <span className="font-semibold">{delta.label}</span> under{" "}
-          {trend.name} — {impact.why}
+          {scenario.label} — {impact.why}
         </div>
       )}
 
@@ -246,8 +253,17 @@ function Section({
 }
 
 function EvidenceItem({ e }: { e: Evidence }) {
+  const st = sourceTypeMeta[e.sourceType];
   return (
     <li className="rounded-md border border-border bg-secondary/30 px-3 py-2.5">
+      <span
+        className={cn(
+          "mb-1.5 inline-flex items-center rounded-xs border px-1.5 py-0.5 font-mono text-[9px] font-semibold tracking-wider",
+          st.chip,
+        )}
+      >
+        {st.label}
+      </span>
       <p className="text-sm leading-relaxed text-foreground/85">{e.claim}</p>
       {e.quote && (
         <p className="mt-1.5 border-l-2 border-foreground/20 pl-2 text-sm italic text-foreground/70">

@@ -24,9 +24,21 @@ export type Position = {
   thesis: string; // ONE line: why this name benefits / is pressured
 };
 
+// Honest classification of the *kind* of source. Our seed set is secondary
+// reporting of disclosures — so it is News / Research / Gov-Lab / Earnings,
+// never an "SEC filing" we don't actually have.
+export type SourceType =
+  | "Earnings"
+  | "News"
+  | "Research"
+  | "Gov / Lab data"
+  | "Filing"
+  | "Press release";
+
 export type Evidence = {
   claim: string; // paraphrased takeaway, in our words
   quote?: string; // optional, <15 words, verbatim
+  sourceType: SourceType; // is this a filing? news? research? earnings?
   source: string; // "SK Hynix Q3 2025 results" etc.
   org: string; // publisher / speaker org
   date: string; // ISO-ish
@@ -113,4 +125,54 @@ export type PortfolioImpact = {
   trendId: string;
   positionImpacts: PositionImpact[];
   summary: PortfolioSummary;
+};
+
+// ---- Unified scenario (preset workload OR simulated event/custom) ----
+
+export type ScenarioImpact = {
+  bottleneckId: string;
+  push: Direction; // tightnessPush on this chokepoint
+  why: string;
+};
+
+export type ScenarioActor = {
+  name: string;
+  ticker?: string;
+  why: string;
+};
+
+export type Scenario = {
+  id: string;
+  label: string; // short headline, e.g. "Long context" or "China OSS model release"
+  kind: "workload" | "event" | "custom";
+  description?: string;
+  note?: string;
+  impacts: ScenarioImpact[];
+  narrative?: string; // directional walk-through (model scenarios)
+  beneficiaries?: ScenarioActor[];
+  pressured?: ScenarioActor[];
+  risks?: string[];
+  origin: "preset" | "model";
+};
+
+// ---- Value-chain graph (Obsidian-style force network) ----
+
+export type GraphNodeType = "hub" | "chokepoint" | "company";
+export type GraphRole = "long" | "watch" | "pressured" | "core";
+
+export type GraphNode = {
+  id: string;
+  label: string; // short on-node label (ticker or abbrev)
+  name: string; // full name
+  type: GraphNodeType;
+  role?: GraphRole;
+  chokepoint?: string; // for companies: which chokepoint they hang off
+  blurb?: string;
+};
+
+export type GraphLink = {
+  source: string;
+  target: string;
+  kind: "supplies" | "feeds" | "energizes";
+  label?: string;
 };

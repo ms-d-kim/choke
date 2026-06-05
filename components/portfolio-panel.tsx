@@ -4,14 +4,14 @@ import { TrendingUp, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { computePortfolioImpact } from "@/lib/scenario";
 import { netDirectionMeta, pnlMeta } from "@/lib/visuals";
-import type { Portfolio, WorkloadTrend } from "@/data";
+import type { Portfolio, Scenario } from "@/data";
 
 export function PortfolioPanel({
   portfolio,
-  trend,
+  scenario,
 }: {
   portfolio: Portfolio;
-  trend: WorkloadTrend | null;
+  scenario: Scenario | null;
 }) {
   return (
     <section className="rounded-xl border border-border bg-card/50 p-5">
@@ -34,8 +34,8 @@ export function PortfolioPanel({
         </span>
       </div>
 
-      {trend ? (
-        <PortfolioImpactView portfolio={portfolio} trend={trend} />
+      {scenario ? (
+        <PortfolioImpactView portfolio={portfolio} scenario={scenario} />
       ) : (
         <BaselineView portfolio={portfolio} />
       )}
@@ -71,12 +71,12 @@ function BaselineView({ portfolio }: { portfolio: Portfolio }) {
 
 function PortfolioImpactView({
   portfolio,
-  trend,
+  scenario,
 }: {
   portfolio: Portfolio;
-  trend: WorkloadTrend;
+  scenario: Scenario;
 }) {
-  const result = computePortfolioImpact(portfolio, trend);
+  const result = computePortfolioImpact(portfolio, scenario);
   const net = netDirectionMeta[result.summary.netDirection];
   const { leansPositivePct, neutralPct, leansNegativePct } = result.summary;
 
@@ -93,7 +93,7 @@ function PortfolioImpactView({
           {net.label}
         </span>
         <span className="text-sm text-muted-foreground">
-          to {trend.name.toLowerCase()}
+          to {scenario.label.toLowerCase()}
         </span>
       </div>
 

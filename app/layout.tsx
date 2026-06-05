@@ -1,22 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plexSans = IBM_Plex_Sans({
+  variable: "--font-plex-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Choke — AI supply-chain bottleneck tracker",
+  title: "CHOKE — AI supply-chain bottleneck terminal",
   description:
-    "Track the physical chokepoints of the AI buildout — memory, packaging, power — map who benefits, and watch a portfolio re-shade directionally under workload scenarios.",
+    "An investor terminal for the AI buildout's physical chokepoints — memory, packaging, power. Map the value chain, simulate any scenario, and watch a book re-shade directionally.",
 };
 
 export default function RootLayout({
@@ -27,10 +29,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`dark ${plexSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <TooltipProvider delayDuration={150}>{children}</TooltipProvider>
+        <TooltipProvider delayDuration={120}>{children}</TooltipProvider>
       </body>
     </html>
   );

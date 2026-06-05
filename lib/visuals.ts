@@ -4,8 +4,18 @@
 // the scenario heat row, and the portfolio. Colors:
 //   tight → red · easing → amber · loose → green   (see globals.css tokens)
 
-import type { Direction, Status } from "@/data";
+import type { Direction, SourceType, Status } from "@/data";
 import { DIRECTION_SCORE, motionOf } from "@/lib/scenario";
+
+// Honest source-kind tags — what *type* of source each claim rests on.
+export const sourceTypeMeta: Record<SourceType, { label: string; chip: string }> = {
+  Earnings: { label: "EARNINGS", chip: "bg-amber/10 text-amber border-amber/30" },
+  News: { label: "NEWS", chip: "bg-cyan/10 text-cyan border-cyan/30" },
+  Research: { label: "RESEARCH", chip: "bg-loose/10 text-loose border-loose/30" },
+  "Gov / Lab data": { label: "GOV / LAB", chip: "bg-loose/10 text-loose border-loose/30" },
+  Filing: { label: "FILING", chip: "bg-amber/15 text-amber border-amber/40" },
+  "Press release": { label: "PRESS", chip: "bg-secondary text-muted-foreground border-border" },
+};
 
 export const statusMeta: Record<
   Status,

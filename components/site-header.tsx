@@ -1,40 +1,66 @@
 import { statusMeta } from "@/lib/visuals";
 import { cn } from "@/lib/utils";
-import { bottlenecks, trends, type Status } from "@/data";
+import { bottlenecks, eventPresets, trends, type Status } from "@/data";
+
+const NAV = [
+  { href: "#sim", label: "SIM" },
+  { href: "#map", label: "MAP" },
+  { href: "#board", label: "BOARD" },
+  { href: "#port", label: "PORT" },
+  { href: "#chat", label: "CHAT" },
+];
 
 export function SiteHeader() {
   return (
     <header>
-      {/* top bar */}
-      <div className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      {/* function bar */}
+      <div className="sticky top-0 z-30 border-b border-amber/25 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+        <div className="mx-auto flex h-10 w-full max-w-[1440px] items-center justify-between gap-3 px-3 sm:px-4">
           <div className="flex items-baseline gap-2.5">
-            <span className="font-mono text-lg font-bold tracking-tight">
+            <span className="font-mono text-base font-bold tracking-tight text-amber">
               CHOKE
             </span>
-            <span className="hidden font-mono text-[11px] uppercase tracking-widest text-muted-foreground sm:inline">
-              bottleneck → beneficiary
+            <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:inline">
+              AI supply-chain terminal
             </span>
           </div>
-          <Legend />
+
+          <nav className="hidden items-center gap-1 md:flex">
+            {NAV.map((n) => (
+              <a
+                key={n.href}
+                href={n.href}
+                className="rounded-xs px-2 py-1 font-mono text-[11px] tracking-wider text-muted-foreground transition-colors hover:bg-secondary hover:text-amber"
+              >
+                {n.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <Legend />
+            <span className="flex items-center gap-1.5 rounded-xs border border-loose/40 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-loose">
+              <span className="size-1.5 animate-pulse rounded-full bg-loose" />
+              live
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* hero / thesis */}
-      <div className="mx-auto w-full max-w-6xl px-4 pt-8 pb-6 sm:px-6 sm:pt-12">
-        <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-          AI supply-chain bottleneck tracker · investor lens
-        </p>
-        <h1 className="mt-3 max-w-3xl text-balance text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
-          Value accrues to whoever owns the bottleneck.
-        </h1>
-        <p className="mt-3 max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-          Choke tracks the physical chokepoints of the AI buildout — memory,
-          packaging, power — maps who benefits and who&apos;s pressured when each
-          one tightens, and lets you re-shade a book directionally under a chosen
-          workload trend.
-        </p>
-        <StatStrip />
+      {/* thesis + stats strip */}
+      <div className="border-b border-border bg-card/40">
+        <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-3 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4">
+          <p className="max-w-2xl text-sm leading-relaxed">
+            <span className="font-semibold text-amber">
+              Value accrues to whoever owns the bottleneck.
+            </span>{" "}
+            <span className="text-muted-foreground">
+              Map the AI buildout&apos;s physical chokepoints — memory, packaging,
+              power — simulate any scenario, and watch a book re-shade.
+            </span>
+          </p>
+          <StatStrip />
+        </div>
       </div>
     </header>
   );
@@ -48,19 +74,17 @@ function StatStrip() {
     0,
   );
   const stats = [
-    { label: "Chokepoints", value: bottlenecks.length },
-    { label: "Names mapped", value: names },
-    { label: "Sources cited", value: sources },
-    { label: "Scenarios", value: trends.length },
+    { label: "Chokepoints", value: `${bottlenecks.length}` },
+    { label: "Names", value: `${names}` },
+    { label: "Sources", value: `${sources}` },
+    { label: "Scenarios", value: `${trends.length + eventPresets.length}+` },
   ];
   return (
-    <dl className="mt-6 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-3 border-t border-border pt-5 sm:grid-cols-4">
+    <dl className="flex shrink-0 items-stretch divide-x divide-border border border-border">
       {stats.map((s) => (
-        <div key={s.label}>
-          <dt className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-            {s.label}
-          </dt>
-          <dd className="mt-0.5 font-mono text-2xl font-semibold tabular-nums">
+        <div key={s.label} className="px-3 py-1">
+          <dt className="term-label">{s.label}</dt>
+          <dd className="font-mono text-lg font-semibold leading-tight tabular-nums text-foreground">
             {s.value}
           </dd>
         </div>
@@ -72,21 +96,16 @@ function StatStrip() {
 function Legend() {
   const order: Status[] = ["tight", "easing", "loose"];
   return (
-    <div className="flex items-center gap-3">
-      <div className="hidden items-center gap-3 md:flex">
-        {order.map((s) => (
-          <span
-            key={s}
-            className="flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground"
-          >
-            <span className={cn("h-2 w-2 rounded-full", statusMeta[s].dot)} />
-            {statusMeta[s].label}
-          </span>
-        ))}
-      </div>
-      <span className="rounded-full border border-border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-        directional · not predictive
-      </span>
+    <div className="hidden items-center gap-2.5 lg:flex">
+      {order.map((s) => (
+        <span
+          key={s}
+          className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+        >
+          <span className={cn("size-1.5 rounded-full", statusMeta[s].dot)} />
+          {statusMeta[s].label}
+        </span>
+      ))}
     </div>
   );
 }

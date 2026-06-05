@@ -24,6 +24,7 @@ export const bottlenecks: BottleneckCard[] = [
       {
         claim:
           "SK Hynix sold out its entire 2026 memory lineup (DRAM/HBM/NAND); Q3 2025 operating profit ~₩11.4T (~$8B), up ~62% YoY.",
+        sourceType: "Earnings",
         source: "SK Hynix Q3 2025 results",
         org: "Bloomberg",
         date: "2025-10-28",
@@ -33,6 +34,7 @@ export const bottlenecks: BottleneckCard[] = [
         claim:
           "SK Hynix's HBM sales head said supply will stay short well into the AI buildout.",
         quote: "difficult for supply to catch up any time soon",
+        sourceType: "News",
         source: "Kim Ki-tae, SK Hynix — via Reuters / TechSpot",
         org: "SK Hynix",
         date: "2025-10",
@@ -41,6 +43,7 @@ export const bottlenecks: BottleneckCard[] = [
       {
         claim:
           "Micron began ahead-of-schedule HBM4 high-volume production; its entire 2026 HBM supply is already committed.",
+        sourceType: "News",
         source: "Micron HBM4 ramp",
         org: "Micron / Yahoo Finance",
         date: "2026-02",
@@ -49,6 +52,7 @@ export const bottlenecks: BottleneckCard[] = [
       {
         claim:
           "SK Hynix signed a letter of intent with OpenAI to supply HBM for its compute buildout.",
+        sourceType: "News",
         source: "SK Hynix–OpenAI LOI",
         org: "Benzinga",
         date: "2025-10",
@@ -127,6 +131,7 @@ export const bottlenecks: BottleneckCard[] = [
       {
         claim:
           'NVIDIA is the CoWoS "anchor tenant," reportedly securing the majority (>60%) of 2025–2026 capacity.',
+        sourceType: "News",
         source: "The Great Packaging Pivot",
         org: "FinancialContent",
         date: "2026-01",
@@ -135,6 +140,7 @@ export const bottlenecks: BottleneckCard[] = [
       {
         claim:
           "TSMC is scaling CoWoS ~35K → ~127–130K wafers/month by end-2026 (~4×) — still reportedly short of demand.",
+        sourceType: "Research",
         source: "CoWoS expansion analysis",
         org: "SemiWiki / Tickeron",
         date: "2025–2026",
@@ -143,6 +149,7 @@ export const bottlenecks: BottleneckCard[] = [
       {
         claim:
           "ASE (world's largest OSAT) expects advanced-packaging sales to roughly double in 2026; TSMC has outsourced simpler steps to ASE and Amkor.",
+        sourceType: "News",
         source: "TSMC advanced packaging",
         org: "CNBC",
         date: "2026-04-08",
@@ -151,6 +158,7 @@ export const bottlenecks: BottleneckCard[] = [
       {
         claim:
           "At its May 2026 Technology Symposium, TSMC said it is rapidly expanding CoWoS + SoIC capacity amid 18 new fabs/packaging facilities worldwide.",
+        sourceType: "News",
         source: "TSMC 2026 Technology Symposium",
         org: "DigiTimes",
         date: "2026-05-14",
@@ -235,6 +243,7 @@ export const bottlenecks: BottleneckCard[] = [
       {
         claim:
           "~2,300 GW of generation/storage sits in US interconnection queues — more than total installed US capacity — with ~5-year average waits.",
+        sourceType: "Gov / Lab data",
         source: "LBNL interconnection queue data",
         org: "Lawrence Berkeley National Lab (via Hanwha)",
         date: "2026-02",
@@ -243,6 +252,7 @@ export const bottlenecks: BottleneckCard[] = [
       {
         claim:
           "Gartner projects ~40% of AI data centers will be operationally constrained by power deficits by 2027.",
+        sourceType: "Research",
         source: "US Power Outlook (Gartner cited)",
         org: "Gartner / Mitsubishi Power",
         date: "2025-11",
@@ -251,6 +261,7 @@ export const bottlenecks: BottleneckCard[] = [
       {
         claim:
           "PJM, the largest US grid, received ~800 interconnection requests (~220 GW) in its latest cycle, with multi-year processing.",
+        sourceType: "News",
         source: "PJM interconnection strain",
         org: "TechCrunch",
         date: "2026-05-08",
@@ -259,6 +270,7 @@ export const bottlenecks: BottleneckCard[] = [
       {
         claim:
           "Bring-your-own-power is accelerating: Caterpillar took a 2 GW genset order (Monarch, WV); Oracle's Project Jupiter pivoted to a 100% Bloom Energy islanded microgrid.",
+        sourceType: "News",
         source: "Replacing diesel in AI-scale data centers",
         org: "DataCenterKnowledge",
         date: "2026",
