@@ -12,7 +12,7 @@ export function ScenarioReadout({
   loading: boolean;
 }) {
   return (
-    <Panel className="flex h-full flex-col">
+    <Panel className="flex flex-col overflow-hidden lg:h-[480px]">
       <PanelHeader
         title="Scenario Readout"
         right={
@@ -23,7 +23,7 @@ export function ScenarioReadout({
           )
         }
       />
-      <div className="flex-1 space-y-3 overflow-y-auto p-3 sm:p-4">
+      <div className="min-h-0 flex-1 space-y-3 overflow-y-auto p-3 sm:p-4">
         {loading ? (
           <div className="flex items-center gap-2 font-mono text-xs text-amber">
             <Loader2 className="size-3.5 animate-spin" /> reasoning through the chain…

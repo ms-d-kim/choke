@@ -25,20 +25,33 @@ export function ChokeApp() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Progressive disclosure: nothing below the lens shows until a workload is picked.
+  const [started, setStarted] = useState(false);
 
   function runWorkload(w: WorkloadProfile) {
     setError(null);
+    setStarted(true);
     setScenario(scenarioFromWorkload(w));
+    if (!started) {
+      // first reveal — bring the map into view
+      setTimeout(() => {
+        document
+          .getElementById("map")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 120);
+    }
   }
 
   function runTrend(trendId: string) {
     const t = trends.find((x) => x.id === trendId);
     if (!t) return;
     setError(null);
+    setStarted(true);
     setScenario(scenarioFromTrend(t));
   }
 
   async function runSimulate(prompt: string, label?: string) {
+    setStarted(true);
     setLoading(true);
     setError(null);
     try {
@@ -85,56 +98,64 @@ export function ChokeApp() {
           />
         </div>
 
-        <div id="sim" className="scroll-mt-14">
-          <ScenarioConsole
-            scenario={scenario}
-            loading={loading}
-            error={error}
-            onTrend={runTrend}
-            onSimulate={runSimulate}
-            onClear={clearScenario}
-          />
-        </div>
+        {started && (
+          <div className="animate-in fade-in space-y-3 duration-500">
+            {/* 2 — the map appears, sized + shaded to the workload */}
+            <div id="map" className="grid scroll-mt-14 gap-3 lg:grid-cols-[1.7fr_1fr]">
+              <Panel className="flex h-[480px] flex-col overflow-hidden">
+                <PanelHeader
+                  title="Value-Chain Map"
+                  sub="bubble size = scenario impact · drag · hover to trace"
+                />
+                <div className="relative min-h-0 flex-1">
+                  <ValueChainGraph
+                    impacts={impacts}
+                    loading={loading}
+                    onSelect={onGraphSelect}
+                  />
+                </div>
+              </Panel>
+              <ScenarioReadout scenario={scenario} loading={loading} />
+            </div>
 
-        <div id="map" className="grid scroll-mt-14 gap-3 lg:h-[520px] lg:grid-cols-[1.7fr_1fr]">
-          <Panel className="flex flex-col overflow-hidden">
-            <PanelHeader
-              title="Value-Chain Map"
-              sub="drag · hover to trace · re-shades to scenario"
-            />
-            <div className="min-h-[420px] flex-1 p-1">
-              <ValueChainGraph
-                impacts={impacts}
+            {/* 3 — stress-test it: patterns, events, free-text → map updates live */}
+            <div id="sim" className="scroll-mt-14">
+              <ScenarioConsole
+                scenario={scenario}
                 loading={loading}
-                onSelect={onGraphSelect}
+                error={error}
+                onTrend={runTrend}
+                onSimulate={runSimulate}
+                onClear={clearScenario}
               />
             </div>
-          </Panel>
-          <ScenarioReadout scenario={scenario} loading={loading} />
-        </div>
 
-        <section id="board" className="scroll-mt-14">
-          <div className="mb-2 flex items-center justify-between">
-            <span className="term-label">Chokepoint Board</span>
-            <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
-              {bottlenecks.length} tracked
-              {scenario ? ` · ${scenario.label}` : ""}
-            </span>
+            {/* depth — evidence per chokepoint */}
+            <section id="board" className="scroll-mt-14">
+              <div className="mb-2 flex items-center justify-between">
+                <span className="term-label">Chokepoint board · the evidence</span>
+                <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
+                  {bottlenecks.length} tracked
+                  {scenario ? ` · ${scenario.label}` : ""}
+                </span>
+              </div>
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {bottlenecks.map((b) => (
+                  <BottleneckCard key={b.id} card={b} scenario={scenario} />
+                ))}
+              </div>
+            </section>
+
+            {/* payoff — what it means for a book */}
+            <div id="port" className="scroll-mt-14">
+              <PortfolioPanel portfolio={defaultPortfolio} scenario={scenario} />
+            </div>
+
+            <div id="chat" className="scroll-mt-14">
+              <AnalystChat />
+            </div>
           </div>
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-            {bottlenecks.map((b) => (
-              <BottleneckCard key={b.id} card={b} scenario={scenario} />
-            ))}
-          </div>
-        </section>
-
-        <div id="port" className="scroll-mt-14">
-          <PortfolioPanel portfolio={defaultPortfolio} scenario={scenario} />
-        </div>
-
-        <div id="chat" className="scroll-mt-14">
-          <AnalystChat />
-        </div>
+        )}
 
         <SiteFooter />
       </main>

@@ -36,8 +36,8 @@ export function ScenarioConsole({
   return (
     <Panel>
       <PanelHeader
-        title="Scenario Console"
-        sub="simulate any event across the chain"
+        title="② Scenario Console"
+        sub="now stress-test it — the map updates live"
         right={
           scenario ? (
             <button

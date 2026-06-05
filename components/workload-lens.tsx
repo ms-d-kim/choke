@@ -29,9 +29,12 @@ export function WorkloadLens({
       />
       <div className="p-3 sm:p-4">
         <p className="mb-3 text-sm text-muted-foreground">
-          Pick an AI workload to reveal its{" "}
-          <span className="text-amber">chokepoint signature</span> — which
-          physical bottlenecks it stresses, and who benefits.
+          <span className="text-foreground">
+            Which AI workload are you most curious about?
+          </span>{" "}
+          Pick one to reveal its{" "}
+          <span className="text-amber">chokepoint signature</span> — which physical
+          bottlenecks it stresses, and who benefits.
         </p>
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {workloads.map((w) => {

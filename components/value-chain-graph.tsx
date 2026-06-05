@@ -25,10 +25,17 @@ type SimNode = GraphNode & {
 };
 type SimLink = { source: SimNode | string; target: SimNode | string; kind: string };
 
-function radiusFor(n: GraphNode) {
+function radiusFor(n: GraphNode, impacts?: Record<string, Direction>) {
   if (n.type === "hub") return 30;
-  if (n.type === "chokepoint") return 22;
-  return 8;
+  if (n.type === "chokepoint") {
+    // size by how hard the scenario pushes this chokepoint's tightness
+    const s = impacts?.[n.id] ? DIRECTION_SCORE[impacts[n.id]] : 0;
+    return 20 + s * 4.5; // ~11 (strongly easing) … 29 (strongly tightening)
+  }
+  // company: size by how impacted its chokepoint is under the scenario
+  const cp = n.chokepoint;
+  const s = cp && impacts?.[cp] ? DIRECTION_SCORE[impacts[cp]] : 0;
+  return Math.max(5, 8 + s * 2.5); // ~5 … 13
 }
 
 function chokepointTone(push?: Direction) {
@@ -63,6 +70,14 @@ export function ValueChainGraph({
   const [hover, setHover] = useState<string | null>(null);
   const dragRef = useRef<string | null>(null);
   const movedRef = useRef(false);
+  const impactsRef = useRef(impacts);
+  impactsRef.current = impacts;
+  const impactsKey = impacts
+    ? Object.keys(impacts)
+        .sort()
+        .map((k) => `${k}:${impacts[k]}`)
+        .join(",")
+    : "";
 
   const { nodes, links, nodeById, adjacency } = useMemo(() => {
     const nodes: SimNode[] = graphNodes.map((n, i) => ({
@@ -101,7 +116,7 @@ export function ValueChainGraph({
           d.type === "company" ? -190 : -780,
         ),
       )
-      .force("collide", (forceCollide as any)().radius((d: any) => radiusFor(d) + 12))
+      .force("collide", (forceCollide as any)().radius((d: any) => radiusFor(d, impactsRef.current) + 14))
       .force("center", (forceCenter as any)(width / 2, height / 2))
       .force("x", (forceX as any)(width / 2).strength(0.05))
       .force("y", (forceY as any)(height / 2).strength(0.06))
@@ -121,13 +136,26 @@ export function ValueChainGraph({
     sim.alpha(0.25).restart();
   }, [width, height]);
 
+  // re-layout when the scenario changes node sizes (collide radius depends on impacts)
+  useEffect(() => {
+    const sim = simRef.current;
+    if (!sim) return;
+    sim.force(
+      "collide",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (forceCollide as any)().radius((d: any) => radiusFor(d, impactsRef.current) + 14),
+    );
+    sim.alpha(0.5).restart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [impactsKey]);
+
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
     const ro = new ResizeObserver((entries) => {
       const rect = entries[0]?.contentRect;
       if (rect?.width) setWidth(Math.max(320, rect.width));
-      if (rect?.height) setHeight(Math.max(360, rect.height));
+      if (rect?.height) setHeight(Math.min(620, Math.max(340, rect.height)));
     });
     ro.observe(el);
     return () => ro.disconnect();
@@ -202,7 +230,7 @@ export function ValueChainGraph({
 
         {/* nodes */}
         {nodes.map((n) => {
-          const r = radiusFor(n);
+          const r = radiusFor(n, impacts);
           const dimmed =
             !!hover && hover !== n.id && !adjacency[hover]?.has(n.id);
           const isChoke = n.type === "chokepoint";
