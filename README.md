@@ -10,7 +10,17 @@ interactive graph, lets you **simulate any scenario**, and re-shades the chain
 > **Directional, not predictive.** Bottlechip shows the *direction* a scenario pushes
 > each chokepoint — colors, sizes, and words, never point-estimate returns.
 
-**Live:** https://bottlechip.vercel.app
+## Demo
+
+[![Bottlechip — 2-minute walkthrough](docs/bottlechip-thumb.png)](https://youtu.be/KaA5OqBeEB4)
+
+- **Live app** → https://choke-one.vercel.app
+- **2-min video walkthrough** → https://youtu.be/KaA5OqBeEB4
+- **Memo** → [`MEMO.md`](./MEMO.md) · [`docs/MEMO.pdf`](./docs/MEMO.pdf)
+
+| Pick a workload | Graph re-shapes by impact | Click a node → cited evidence |
+|:--:|:--:|:--:|
+| ![Workload lens](docs/screenshots/01-landing.png) | ![Value-chain graph](docs/screenshots/02-graph.png) | ![Cited evidence](docs/screenshots/03-evidence.png) |
 
 ## The flow
 
@@ -53,7 +63,16 @@ lib/visuals.ts       # the status color system + source-type tags
 components/          # graph, lens, console, readout, chokepoint-detail, chat, header, anim
 app/api/scenario     # scenario simulator (structured, grounded, directional)
 app/api/chat         # grounded analyst chat
+docs/                # memo PDF, demo video + thumbnail, screenshots, video script
 ```
+
+## Artifacts ([`docs/`](./docs))
+
+- [`MEMO.pdf`](./docs/MEMO.pdf) — the one-page project memo (also [`MEMO.md`](./MEMO.md))
+- [`bottlechip-demo.mp4`](./docs/bottlechip-demo.mp4) — the ~2-min demo ([YouTube](https://youtu.be/KaA5OqBeEB4))
+- [`bottlechip-thumb.png`](./docs/bottlechip-thumb.png) — video thumbnail
+- [`screenshots/`](./docs/screenshots) — current UI stills
+- [`VIDEO_SCRIPT.md`](./docs/VIDEO_SCRIPT.md) + [`narrate.mjs`](./docs/narrate.mjs) — the narration + ElevenLabs voiceover generator
 
 ## On the data & discipline
 
